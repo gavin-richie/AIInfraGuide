@@ -228,6 +228,10 @@ AIInfraGuide 正是为了解决这些问题而创建的——一个**开源、�
 
 涵盖公司包括字节跳动、阿里巴巴、腾讯、百度、快手、美团、蚂蚁、英伟达、MiniMax、蔚来、小鹏、理想等。
 
+### 📝 面试题解答库
+
+面试宝典配套的独立解答库：**首批覆盖「综合」题库 10 个文件全部 185+ 道题 + 全库高频手写编程题**，按 12 个技术主题组织；编程题配 `solutions/` 下的 C++/CUDA/Python 三个可构建、可测试的代码工程（91 项自动化测试全绿，附 RTX 3090 实测数据）。[在线浏览 →](https://caomaolufei.github.io/AIInfraGuide/answers) · [代码工程 →](./solutions)
+
 <img src="https://caomaolufei.github.io/AIInfraGuide/images/AIinfraGuideWeb2.png" alt="AIinfraGuideWeb2" style="max-width: 100%; display: block; margin: 0 auto;" />
 
 <br>

@@ -7,6 +7,7 @@ import { GUIDE_CATEGORIES, type CategorySlug } from '../utils/categories';
 const guides = await getCollection('guides', ({ data }) => !data.draft);
 const posts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const answersCount = (await getCollection('answers', ({ data }) => !data.draft)).length;
 
 // 博客卡片：合并 posts 集合与 about 目录下的独立页面
 const getPathEarly = (path: string) => {
@@ -167,6 +168,14 @@ const getFirstGuideUrl = (category: string, urlPrefix: string) => {
             slug={cat.slug}
           />
         ))}
+        <CategoryCard
+          icon="💡"
+          title="题目解答"
+          description="面试宝典综合题库全覆盖 + 手写编程题可运行工程（C++/CUDA/Python 三语言验证）"
+          href={getPath('/answers')}
+          count={answersCount}
+          slug="interview-answers"
+        />
       </div>
     </div>
   </section>

@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import AnswerSidebar from './AnswerSidebar.astro';
+import { flattenAnswerOrder, topicColor } from '../utils/answerGrouping';
+
+interface Props {
+  urlPrefix: string;
+}
+
+const { urlPrefix } = Astro.props;
+
+const answers = await getCollection('answers', ({ data }) => !data.draft);
+const items = flattenAnswerOrder(answers);
+
+const getPath = (path: string) => {
+  const base = import.meta.env.BASE_URL;
+  return base === '/' ? path : `${base.replace(/\/$/, '')}${path}`;
+};
+---
+
+<section class="max-w-[1500px] mx-auto px-6 py-12">
+  <!-- Hero -->
+  <div class="mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">面试题解答库</h1>
+    <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed max-w-3xl">
+      「综合」题库全部题目 + 全库高频手写编程题的解答。编程题配有可构建、可测试、带实测数据的三语言代码工程
+      （<code class="text-[#007aff] dark:text-[#0a84ff]">solutions/</code> 下的 C++/CUDA/Python）。
+    </p>
+    <div class="flex gap-6 mt-6">
+      <div>
+        <span class="text-3xl font-bold text-gray-900 dark:text-white tabular-nums">{items.length}</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">解答篇</span>
+      </div>
+      <div>
+        <span class="text-3xl font-bold text-gray-900 dark:text-white tabular-nums">185+</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">综合题库覆盖</span>
+      </div>
+      <div>
+        <span class="text-3xl font-bold text-gray-900 dark:text-white tabular-nums">91</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">自动化测试全绿</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+    {items.map((item) => {
+      const color = topicColor(item.data.topic);
+      return (
+        <a
+          href={getPath(`${urlPrefix}/${item.id}`)}
+          class="group p-6 rounded-2xl border border-gray-200 dark:border-white/[0.06] hover:border-gray-300 dark:hover:border-white/[0.12] hover:shadow-lg transition-all duration-300 bg-white dark:bg-white/[0.02]"
+        >
+          <div class="flex items-center gap-2 mb-3">
+            <span
+              class="px-2 py-0.5 text-[11px] font-medium rounded-md"
+              style={`background: ${color}15; color: ${color};`}
+            >
+              {item.data.topic}
+            </span>
+            <span class="text-[11px] text-gray-400 dark:text-gray-500 ml-auto tabular-nums">
+              {item.data.pubDate.toLocaleDateString('zh-CN')}
+            </span>
+          </div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-[#007aff] dark:group-hover:text-[#0a84ff] transition-colors duration-200">
+            {item.data.title}
+          </h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-3">
+            {item.data.description}
+          </p>
+        </a>
+      );
+    })}
+  </div>
+</section>

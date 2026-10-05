@@ -154,6 +154,14 @@ const mobileNavLinkClass = (prefix: string) =>
                 </a>
               </li>
               <li class="group">
+                <a href={getPath('/answers')} class={navLinkClass('/answers')}>
+                  <span class="relative px-3 py-1.5 rounded-lg group-hover:bg-gray-100/70 dark:group-hover:bg-white/[0.06] transition-colors duration-200">
+                    题目解答
+                  </span>
+                  <span class={navLinkIndicator('/answers')} />
+                </a>
+              </li>
+              <li class="group">
                 <a href={getPath('/about')} class={navLinkClass('/about')}>
                   <span class="relative px-3 py-1.5 rounded-lg group-hover:bg-gray-100/70 dark:group-hover:bg-white/[0.06] transition-colors duration-200">
                     关于
@@ -243,6 +251,7 @@ const mobileNavLinkClass = (prefix: string) =>
             <p class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider px-4 mb-2">更多</p>
             <nav class="flex flex-col gap-0.5">
               <a href={getPath('/interview')} class={mobileNavLinkClass('/interview')}>面试宝典</a>
+              <a href={getPath('/answers')} class={mobileNavLinkClass('/answers')}>题目解答</a>
               <a href={getPath('/about')} class={mobileNavLinkClass('/about')}>关于</a>
               <a href="https://github.com/caomaolufei/AIInfraGuide" target="_blank" rel="noopener noreferrer" class="mobile-nav-link flex items-center gap-3 py-3 px-4 rounded-xl text-[13px] text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all font-medium cursor-pointer">
                 GitHub

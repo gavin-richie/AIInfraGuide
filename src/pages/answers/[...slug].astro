@@ -1,0 +1,24 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import AnswerContent from '../../components/AnswerContent.astro';
+import { flattenAnswerOrder } from '../../utils/answerGrouping';
+
+export async function getStaticPaths() {
+  const answers = await getCollection('answers', ({ data }) => !data.draft);
+  return answers.map((entry) => ({
+    params: { slug: entry.id },
+    props: entry,
+  }));
+}
+
+type Props = CollectionEntry<'answers'>;
+
+const entry = Astro.props;
+const allAnswers = await getCollection('answers', ({ data }) => !data.draft);
+const sorted = flattenAnswerOrder(allAnswers);
+---
+
+<Layout title={`${entry.data.title} - 面试题解答`} description={entry.data.description}>
+  <AnswerContent entry={entry} allAnswers={sorted} urlPrefix="/answers" />
+</Layout>

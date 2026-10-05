@@ -54,4 +54,17 @@ const interview = defineCollection({
   }),
 });
 
-export const collections = { guides, posts, interview };
+const answers = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './docs/interview-answers' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    topic: z.string(),
+    order: z.number().default(0),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { guides, posts, interview, answers };

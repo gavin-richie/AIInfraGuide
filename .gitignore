@@ -7,3 +7,10 @@ dist/
 *.log
 public/pagefind/
 docs/guides/课程资料
+# 面试题解答代码工程的构建产物与 Python 安装产物
+solutions/*/build/
+solutions/python/src/*.egg-info/
+__pycache__/
+.pytest_cache/
+*.so
+.zcode/
