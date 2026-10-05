@@ -26,6 +26,7 @@ set(TESTS
     test_conv2d
     test_bilinear
     test_layernorm
+    test_language_basics
 )
 foreach(t IN LISTS TESTS)
     add_executable(${t} tests/${t}.cpp)

@@ -55,6 +55,8 @@ struct CudaDeleter { void operator()(float* p) const { cudaFree(p); } };
 std::unique_ptr<float, CudaDeleter> dev(nullptr);
 ```
 
+工程化对拍（数组特化 / `shared_ptr<float[]>` + 自定义 deleter 调用计数）：`solutions/cpp/tests/test_language_basics.cpp`。
+
 要点：`shared_ptr` 无数组特化（`shared_ptr<T[]>` 到 C++17 才进标准且无 `operator[]`），必须给 deleter，否则 `delete p` 对数组是 UB；工程上连续内存更推荐 `std::vector`/`std::array`（还有 size），智能指针管裸内存多用于对接 C/驱动接口。
 
 ## Q4. C++ 多态的实现方式；虚函数底层机制；构造函数中调用虚函数的行为

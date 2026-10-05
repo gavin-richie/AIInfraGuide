@@ -43,6 +43,8 @@ for (int k = 0; k < BK; ++k) {
 }
 ```
 
+工程化：`solutions/cuda/src/gemm.cu::gemm_regtile_8x8`（BM=BN=64、BK=16，64 线程每线程 8×8 累加器），ctest `test_gemm` 对拍 + --bench 实测。
+
 ## Q2. 使用 CUDA 实现算子的主要难点
 
 **（寒武纪 实习 1-2）**
@@ -174,6 +176,8 @@ __global__ void silu_kernel(const float* __restrict__ x, float* __restrict__ y, 
 }
 // 启动: silu_kernel<<<(n + 255) / 256, 256>>>(x, y, n); CUDA_CHECK(cudaGetLastError());
 ```
+
+工程化：`solutions/cuda/src/elementwise.cu::silu`（精确 expf 版），ctest `test_elementwise` 与 CPU 对拍（误差 < 1e-5 相对量级）。
 
 追问演进准备好：①grid-stride 版（grid 固定大小，支持任意 n、persistent 形态）；②float4 向量化（对齐 + 尾块 fallback）；③与 bias/scale 融合成一个 kernel（省一次读写）；④归约类怎么写（引到《02》Q1）。验证习惯：写完立刻说"我会用 CPU 参考实现对拍 + ncu 看带宽"。
 

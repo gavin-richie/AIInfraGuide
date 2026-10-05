@@ -33,6 +33,8 @@ struct A { char c; int i; short s; };  // 1 + (3 pad) + 4 + 2 + (2 pad) = 12，�
 struct B { int i; short s; char c; };  // 4 + 2 + 1 + (1 pad) = 8 —— 成员按对齐数降序排更省
 ```
 
+工程化：`solutions/cpp/tests/test_language_basics.cpp`（`static_assert(sizeof(A)==12 / sizeof(B)==8)` 编译期断言 + 运行期地址对齐检查）。
+
 **意义**：
 
 1. **硬件要求**：CPU 按对齐粒度取数（x86 对未对齐有惩罚，ARM/SIMD 指令可能直接 fault）；
@@ -221,6 +223,8 @@ std::vector<int>().swap(v);          // 经典：空 vector 与 v 交换，临�
 v.shrink_to_fit();                   // C++11：请求 capacity 收缩到 size（非强制，实现可拒绝）
 std::vector<int> tmp = std::move(v); // C++17 后更推荐：v 进入有效但未指定状态（通常为空）
 ```
+
+工程化对拍（swap 后 capacity==0、shrink_to_fit、move 语义）：`solutions/cpp/tests/test_language_basics.cpp`。
 
 关联考点（同《09》Q12）：扩容按 1.5-2 倍几何增长导致均摊 O(1) push_back；`reserve` 预留避免反复搬移。字节追问"为什么不给 clear 加释放"：容量保留让"清空再装同样多"零分配，释放交给作用域/swap 显式表达意图。
 

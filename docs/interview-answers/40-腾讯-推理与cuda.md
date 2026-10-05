@@ -345,6 +345,8 @@ consteval int sq(int x) { return x * x; }        // 只能编译期
 int arr[sq(4)];                                  // 用作常量表达式
 ```
 
+工程化：`solutions/cpp/tests/test_language_basics.cpp`（constexpr CRC32 建表 + `static_assert` 编译期校验；consteval 为 C++20，C++17 以 constexpr+static_assert 等效约束）。
+
 ### Q39. C# 事件机制；如何设计一个事件系统；事件如何与 GameObject 生命周期绑定（实习 基础 5/6/7）
 
 - **C# 事件机制**：`delegate`（类型安全函数指针，可组播 MulticastDelegate，`+ =`/`- =` 增删调用列表）+ `event` 关键字修饰委托字段——外部只能 `+=`/`-=` 订阅退订，**不能直接触发或清空**（封装）；触发即按调用列表顺序回调。本质对比 C++：委托 ≈ `std::vector<std::function>` 的语法糖 + 语法级限制。

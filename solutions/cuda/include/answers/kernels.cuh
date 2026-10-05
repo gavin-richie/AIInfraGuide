@@ -23,6 +23,8 @@ void softmax_online(const float *d_in, float *d_out, int rows, int cols);
 // ---------------- gemm.cu ----------------
 void gemm_naive(const float *A, const float *B, float *C, int M, int N, int K);
 void gemm_smem_tiled(const float *A, const float *B, float *C, int M, int N, int K);
+// 寄存器 tile 版: BM=BN=64, 64 线程, 每线程 8x8 累加器(81-t3 Q1 寒武纪)
+void gemm_regtile_8x8(const float *A, const float *B, float *C, int M, int N, int K);
 
 // ---------------- transpose.cu ----------------
 void transpose_naive(const float *in, float *out, int rows, int cols);
@@ -64,5 +66,28 @@ void row_sum_warp(const float *in, float *out, int rows, int cols);
 
 // ---------------- reduce.cu 附: 向量加(冒烟) ----------------
 void vec_add(const float *a, const float *b, float *c, size_t n);
+
+// ---------------- elementwise.cu ----------------
+// grid-stride 向量加(50-百度 Q17): 线程跨步循环覆盖任意 n
+void vec_add_grid_stride(const float *a, const float *b, float *c, size_t n);
+// SiLU 逐元素(81-t3 Q13 遂原): y = x / (1 + e^-x)
+void silu(const float *x, float *y, size_t n);
+// 向量外积(80-t3 #11 英伟达): C(MxN) = a(M) ⊗ b(N)
+void outer_product(const float *a, const float *b, float *c, int M, int N);
+
+// ---------------- concat4d.cu (93-t4 Q5 元戎) ----------------
+// 通用版: 任意拼接维 dim; ins 为设备端指针数组, offs[K+1] 拼接维前缀和,
+// dims 为输出四维尺寸, total 为输出元素总数; hist/dims/offs 均须已在设备端
+void concat4d_generic(const float *const *ins, float *out,
+                      const int *offs, const int *dims, int K, int dim, long total);
+// 最后一维(W)特化: rows = N*C*H, out 每行 Wa+Wb
+void concat4d_last(const float *a, const float *b, float *out,
+                   int Wa, int Wb, long rows);
+
+// ---------------- kth_largest.cu (93-t4 Q6 小鹏) ----------------
+// kernel1: 全局直方图(smem 私有化 + grid-stride); hist 须先清零
+void hist256_grid_stride(const unsigned char *data, long n, unsigned int *hist);
+// kernel2: 单 block 反转包含性前缀和, 输出第 K 大(out 为设备端 1 字节)
+void kth_from_hist(const unsigned int *hist, unsigned int K, unsigned char *out);
 
 }  // namespace answers

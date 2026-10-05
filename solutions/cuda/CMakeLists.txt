@@ -25,11 +25,15 @@ set(TESTS
     test_transpose
     test_norm_layout
     test_misc
+    test_elementwise
+    test_concat4d
+    test_kth_largest
 )
 foreach(t IN LISTS TESTS)
     add_executable(${t} tests/${t}.cu src/reduce.cu src/softmax.cu src/gemm.cu
                                    src/transpose.cu src/norm.cu src/layout.cu
-                                   src/histogram_scan.cu src/pool_iou.cu)
+                                   src/histogram_scan.cu src/pool_iou.cu
+                                   src/elementwise.cu src/concat4d.cu src/kth_largest.cu)
     target_include_directories(${t} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/tests)
     target_link_libraries(${t} PRIVATE Threads::Threads)
