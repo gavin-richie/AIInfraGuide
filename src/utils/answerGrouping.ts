@@ -13,6 +13,15 @@ export const TOPIC_META: Record<string, { color: string }> = {
   'C++ 基础': { color: '#6366F1' },
   'C++ 编程': { color: '#6366F1' },
   算法: { color: '#EF4444' },
+  // 公司题解批次 (20-104)
+  '公司题解-字节跳动': { color: '#0EA5E9' },
+  '公司题解-阿里巴巴': { color: '#F97316' },
+  '公司题解-腾讯': { color: '#22C55E' },
+  '公司题解-百度': { color: '#3B82F6' },
+  '公司题解-T2': { color: '#A855F7' },
+  '公司题解-T3': { color: '#14B8A6' },
+  '公司题解-T4': { color: '#EAB308' },
+  '公司题解-T5': { color: '#EC4899' },
 };
 
 export function topicColor(topic: string): string {

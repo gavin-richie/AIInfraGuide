@@ -5,19 +5,24 @@
 ```
 solutions/
 ├── cpp/     C++17 + CMake：LRU/内存池(new[]语义)/单例(Meyers+DCL)/手写智能指针/
-│            NMS+IoU/Conv2D/双线性插值/LayerNorm(Welford)/环形缓冲区
-│            → ctest 9 个测试全绿
+│            NMS+IoU/Conv2D/双线性插值/LayerNorm(Welford)/环形缓冲区 +
+│            语言基础(内存对齐/constexpr/完美转发/迭代器删除/unique_ptr 数组)
+│            → ctest 10 个测试全绿
 ├── cuda/    CUDA 12 + CMake(sm_86, 3090 实测)：归约(原子 vs 树+warp shuffle)、
-│            数值稳定/Online Softmax、GEMM(naive vs smem tiling)、矩阵转置
-│            (smem+padding 消 bank conflict)、LayerNorm/RMSNorm、NCHW→NHWC、
-│            4D 广播乘、直方图(全局原子 vs smem 私有化)、前缀和、AvgPooling、
-│            IoU、行归约(一行一 warp)、向量加
-│            → ctest 6 个测试全绿，--bench 输出 3090 实测带宽数据
+│            数值稳定/Online Softmax、GEMM(naive/smem tiling/8×8 寄存器 tile)、
+│            矩阵转置(smem+padding 消 bank conflict)、LayerNorm/RMSNorm、
+│            NCHW→NHWC、4D 广播乘、直方图(全局原子 vs smem 私有化)、前缀和、
+│            AvgPooling、IoU、行归约(一行一 warp)、向量加(bound-check/grid-stride)、
+│            SiLU、向量外积、4D Concat(通用+末维)、uint8 第 K 大(直方图+反转 scan)
+│            → ctest 9 个测试全绿，--bench 输出 3090 实测带宽数据
 └── python/  PyTorch + Triton：MHA/GQA/MQA/MLA(含权重吸收)/Online Softmax/
              FlashAttention v1&v2(与 SDPA 对拍)/PagedAttention(block table)、
              Triton fused softmax/matmul/layernorm、LoRA/SFT loss/广播语义/
-             Flow Matching、LeetCode 算法 ~45 题
-             → pytest 76 个测试全绿（GPU 上运行）
+             Flow Matching、LeetCode 算法 ~45 题 +
+             公司批次模块(字节 MoE/前缀缓存/RLHF、阿里 AWQ W4A16/GRPO/SVM、
+             腾讯 Triton PagedAttention/内存文件系统、百度 fused RMSNorm/KV 量化/
+             PPO-GAE、T2-T5 校准/量化 GEMM/调度/MLA 吸收/投机采样等)
+             → pytest 277 个测试全绿（GPU 上运行）
 ```
 
 ## 环境要求

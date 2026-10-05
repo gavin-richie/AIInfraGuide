@@ -230,7 +230,7 @@ AIInfraGuide 正是为了解决这些问题而创建的——一个**开源、�
 
 ### 📝 面试题解答库
 
-面试宝典配套的独立解答库：**首批覆盖「综合」题库 10 个文件全部 185+ 道题 + 全库高频手写编程题**，按 12 个技术主题组织；编程题配 `solutions/` 下的 C++/CUDA/Python 三个可构建、可测试的代码工程（91 项自动化测试全绿，附 RTX 3090 实测数据）。[在线浏览 →](https://caomaolufei.github.io/AIInfraGuide/answers) · [代码工程 →](./solutions)
+面试宝典配套的独立解答库：**「综合」题库 185+ 道全解 + T0-T5 公司面经批次（字节/阿里/腾讯/百度/AI 独角兽/芯片厂/车企/长尾公司）1000+ 道题目解答**，按技术主题与公司组织成 43 篇；编程题配 `solutions/` 下的 C++/CUDA/Python 三个可构建、可测试的代码工程（296 项自动化测试全绿，附 RTX 3090 实测数据）。[在线浏览 →](https://caomaolufei.github.io/AIInfraGuide/answers) · [代码工程 →](./solutions)
 
 <img src="https://caomaolufei.github.io/AIInfraGuide/images/AIinfraGuideWeb2.png" alt="AIinfraGuideWeb2" style="max-width: 100%; display: block; margin: 0 auto;" />
 
